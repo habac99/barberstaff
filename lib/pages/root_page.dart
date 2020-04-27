@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:barberstaff/pages/login.dart';
+import 'package:barberstaff/pages/login_page.dart';
 import 'package:barberstaff/services/authentication.dart';
-import 'package:barberstaff/pages/home.dart';
+import 'package:barberstaff/pages/home_page.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -9,18 +9,18 @@ enum AuthStatus {
   LOGGED_IN,
 }
 
-class WelcomePage extends StatefulWidget {
-  WelcomePage({this.auth});
+class RootPage extends StatefulWidget {
+  RootPage({this.auth});
 
   final BaseAuth auth;
 
   @override
-  State<StatefulWidget> createState() => new _WelcomePageState();
+  State<StatefulWidget> createState() => new _RootPageState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
+class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
-  String _userId = "";
+  String _email = "";
 
   @override
   void initState() {
@@ -28,10 +28,10 @@ class _WelcomePageState extends State<WelcomePage> {
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         if (user != null) {
-          _userId = user?.uid;
+          _email= user?.email;
         }
         authStatus =
-        user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
+            user?.email == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
       });
     });
   }
@@ -39,7 +39,7 @@ class _WelcomePageState extends State<WelcomePage> {
   void loginCallback() {
     widget.auth.getCurrentUser().then((user) {
       setState(() {
-        _userId = user.uid.toString();
+        _email = user.email.toString();
       });
     });
     setState(() {
@@ -50,7 +50,7 @@ class _WelcomePageState extends State<WelcomePage> {
   void logoutCallback() {
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
-      _userId = "";
+      _email = "";
     });
   }
 
@@ -76,11 +76,12 @@ class _WelcomePageState extends State<WelcomePage> {
         );
         break;
       case AuthStatus.LOGGED_IN:
-        if (_userId.length > 0 && _userId != null) {
+        if (_email.length > 0 && _email != null) {
           return new HomePage(
-            userId: _userId,
+            email: _email,
             auth: widget.auth,
             logoutCallback: logoutCallback,
+
           );
         } else
           return buildWaitingScreen();

@@ -1,9 +1,6 @@
-import 'package:barberstaff/pages/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:barberstaff/services/authentication.dart';
-
-
-import 'package:barberstaff/pages/login.dart';
+import 'package:barberstaff/pages/root_page.dart';
 
 void main() {
   runApp(new MyApp());
@@ -18,6 +15,6 @@ class MyApp extends StatelessWidget {
         theme: new ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: new WelcomePage(auth: new Auth()));
+        home: new RootPage(auth: new Auth()));
   }
 }
