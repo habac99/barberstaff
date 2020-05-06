@@ -51,7 +51,7 @@ class _RootPageState extends State<RootPage> {
                 
                  setState(() {
                   _email = user.email.toString();
-                 data = docs.documents[0].data;
+                //  data = docs.documents[0].data;
               
            
           });
