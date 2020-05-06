@@ -1,21 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:barberstaff/services/authentication.dart';
-import 'package:barberstaff/models/getBookingdata.dart';
-// import 'package:firebase_database/firebase_database.dart';
+import 'package:barberstaff/services/StaffData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:barberstaff/models/User.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:barberstaff/models/todo.dart';
-import 'dart:async';
+
+
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.auth,this.logoutCallback, this.email })
+  HomePage({Key key, this.auth,this.logoutCallback, this.email, this.data})
       : super(key: key);
 
   final BaseAuth auth;
   final VoidCallback logoutCallback;
   final String email;
+  final  data;
   
   // final String userId;
   // final getData mygetData;
@@ -30,45 +30,25 @@ class _HomePageState extends State<HomePage> {
   // final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  String _email ;
-  User user = new User();
-  List<int> _Shedule = [1,3,5,7];
-
-    // Future  getEmail() async{
-    //   final FirebaseUser user = await _firebaseAuth.currentUser();
-    //   final email = user.email;
-    //   this._email = email.toString();
-    //   print (email);
-
-    // }
-
-    String getEmail(){
-        test();
-        return this._email ; 
-
-      
-        
-    }
-    void  test() async {
-      FirebaseUser user =  await _firebaseAuth.currentUser();
-      this._email = user.email.toString();
-      
-      
-      
-    }
-   
-      
-
-   
-
   
-
+  
+  List<int> _Shedule = [1,3,5,7];
+  
 
  @override
  void initState() {
-   
    super.initState();
-   _email = getEmail();
+   StaffData().getStaffInfor(widget.email)
+              .then((QuerySnapshot docs){
+                // print(_email);
+                // if(docs.documents.isEmpty) print("empty");
+                // else print('not empty');
+                // data = docs.documents[0].data;
+ 
+   });
+   
+
+   
    
 }
 
@@ -89,8 +69,7 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
-    // String email = getEmail();
-    // test();
+   
     return new Scaffold(
 
       appBar: AppBar(title: Text("Staff")),
@@ -175,6 +154,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                       color: Colors.blueAccent, 
                       onPressed: () => {},
+
           );
           case 9:
              return   FlatButton(
@@ -282,13 +262,22 @@ class _HomePageState extends State<HomePage> {
                             )
                         ),
                       ),
-                      ListTile(
-                        title: Text('Logout'),
-                        onTap: signOut
-                      ),
+                     
                       ListTile(
                         title:  Text(widget.email),
                         onTap: () => {},
+                      ),
+                      ListTile(
+                        title:  Text(widget.data['City']),
+                        onTap: () => {},
+                      ),
+                      ListTile(
+                        title:  Text(widget.data['salonName']),
+                        onTap: () => {},
+                      ),
+                       ListTile(
+                        title: Text('Logout'),
+                        onTap: signOut
                       )
                     ],
                   )
