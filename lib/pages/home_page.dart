@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-
+  var test;
   // final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -37,15 +37,29 @@ class _HomePageState extends State<HomePage> {
 
  @override
  void initState() {
-   super.initState();
+   
    StaffData().getStaffInfor(widget.email)
               .then((QuerySnapshot docs){
                 // print(_email);
                 // if(docs.documents.isEmpty) print("empty");
                 // else print('not empty');
                 // data = docs.documents[0].data;
+    
  
    });
+   StaffData().getShedule(widget.email, widget.data['City'], widget.data['Salon'])
+              .then((QuerySnapshot docs){
+                print(widget.data['City']);
+                if(docs.documents.isEmpty) print('empty');
+                else {
+                  print('not empty');
+                test = docs.documents[0].documentID;
+                print(test);
+               
+                }
+
+   });
+   super.initState();
    
 
    
@@ -234,18 +248,9 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () => {},
           );
           }
-         
-          
-          
-          }
-          
-          
-          
-       
-         
-
-        
-        
+     
+        }
+  
         )
       ),
           
@@ -273,6 +278,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ListTile(
                         title:  Text(widget.data['salonName']),
+                        onTap: () => {},
+                      ),
+                      ListTile(
+                        title:  Text(test.toString()),
                         onTap: () => {},
                       ),
                        ListTile(
