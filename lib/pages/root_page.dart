@@ -4,6 +4,7 @@ import 'package:barberstaff/services/authentication.dart';
 import 'package:barberstaff/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:barberstaff/services/StaffData.dart';
+import 'package:intl/intl.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -26,6 +27,7 @@ class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _email = "";
   var data;
+  String currentDate;
 
   @override
   void initState() {
@@ -94,6 +96,14 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_email.length > 0 && _email != null) {
+           var now = new  DateTime.now();
+      
+      String dateFormated = DateFormat('dd_MM_yyyy').format(now);
+      print(dateFormated);
+      setState(() {
+        this.currentDate = dateFormated;
+        
+      });
           StaffData().getStaffInfor(_email)
               .then((QuerySnapshot docs){
                 // print(_email);
@@ -117,6 +127,7 @@ class _RootPageState extends State<RootPage> {
             auth: widget.auth,
             logoutCallback: logoutCallback,
             data : data,
+            currentDate: currentDate,
 
           );
         } else

@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 //String salonId;
 class StaffData{
@@ -29,21 +30,28 @@ class StaffData{
 //  }
 
  getShedule(String email, String city, String salonId) {
-    //  String _city = city;
-    //  String _salonName = salonName;
-     // StaffData().getSalonID(_city, _salonName);
-
-     // if(this.salonId.length > 1) print(this.salonId);
-     //                 else print("Fuck Flutter");
-    //  StaffData().test();
-     //  print("SalonId: " + this.salonId);
+      var now = new  DateTime.now();
+      
+      String dateFormated = DateFormat('dd_MM_yyyy').format(now);
+      // String year  = now.year.toString();
+      // int month = now.month.toInt();
+      // if (month < 10){
+      //   monthFormat = "0" + month.toString();
+      // }
+      // else{
+      //   monthFormat = month.toString();
+      // }
+      // String day   = now.day.toString();
+      // String bookingDate = day + "_" + month + "_" + year;
+      // print( "this is date" + bookingDate);
+      print("this is date " +" " + dateFormated);
       return Firestore.instance.collection('AllSalon')
           .document(city)
           .collection('Branch')
           .document(salonId)
           .collection('Barber')
           .document(email)
-          .collection('24_04_2020')
+          .collection(dateFormated)
           .getDocuments();
  }
 

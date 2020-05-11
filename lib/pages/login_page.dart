@@ -132,24 +132,14 @@ class _LoginPageState extends State<LoginPage> {
               case 0:
                 return showLogo() ;
               case 1:
-                return new Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: showCityPicker(),
-                      ),
-                      Expanded(
-                        child: showSalonPicker(),
-                        )
-
-                    ]
-                  );
-              case 2:
                 return showEmailInput();
-              case 3:
+              case 2:
                 return showPasswordInput()  ;
+              case 3:
+                return  showErrorMessage();
+                
               case 4:
-                return showPrimaryButton()  ;
-              
+                return showPrimaryButton();
                   
               // return showEmailInput();
             }
