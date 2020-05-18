@@ -3,7 +3,7 @@ import 'package:barberstaff/pages/login_page.dart';
 import 'package:barberstaff/services/authentication.dart';
 import 'package:barberstaff/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:barberstaff/services/StaffData.dart';
+import 'package:barberstaff/services/StaffServices.dart';
 import 'package:intl/intl.dart';
 
 enum AuthStatus {
@@ -27,6 +27,7 @@ class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _email = "";
   var data;
+  var salonID;
   String currentDate;
 
   @override
@@ -45,7 +46,7 @@ class _RootPageState extends State<RootPage> {
 
   void loginCallback() {
     widget.auth.getCurrentUser().then((user) {
-       StaffData().getStaffInfor(_email)
+       StaffServices().getStaffInfor(_email)
               .then((QuerySnapshot docs){
                 // print(_email);
                 // if(docs.documents.isEmpty) print("empty");
@@ -104,7 +105,7 @@ class _RootPageState extends State<RootPage> {
         this.currentDate = dateFormated;
         
       });
-          StaffData().getStaffInfor(_email)
+          StaffServices().getStaffInfor(_email)
               .then((QuerySnapshot docs){
                 // print(_email);
                 // if(docs.documents.isEmpty) print("empty");
@@ -112,6 +113,14 @@ class _RootPageState extends State<RootPage> {
                 setState(() {
                   this.data = docs.documents[0].data;
                 });
+          StaffServices().getSalonID(this.data['City'], this.data['salonName'])
+              .then((QuerySnapshot result){
+                setState(() {
+                  this.salonID = result.documents[0].documentID;
+
+                  
+                });
+              });
                
                    
                   //  print(this.data['City']);
@@ -127,6 +136,7 @@ class _RootPageState extends State<RootPage> {
             auth: widget.auth,
             logoutCallback: logoutCallback,
             data : data,
+            salonID: salonID,
             currentDate: currentDate,
 
           );

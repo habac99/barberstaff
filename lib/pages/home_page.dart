@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:barberstaff/services/authentication.dart';
-import 'package:barberstaff/services/StaffData.dart';
+import 'package:barberstaff/services/StaffServices.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,7 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.auth,this.logoutCallback, this.email, this.data, this.currentDate})
+  HomePage({Key key, this.auth,this.logoutCallback, this.email, this.data, this.currentDate,this.salonID})
       : super(key: key);
 
   final BaseAuth auth;
@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
   final String email;
   final  data;
   final String currentDate;
+  final String salonID;
   
   // final String userId;
   // final getData mygetData;
@@ -28,10 +29,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   var test;
-  // final FirebaseDatabase _database = FirebaseDatabase.instance;
+ 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  // List<String> _Shedule = ["21","22"];
+  
   @override
  void initState() {
    
@@ -60,15 +60,8 @@ class _HomePageState extends State<HomePage> {
 
   //  });
    super.initState();
-   
-
-   
-   
 }
-
-
-
-  @override
+@override
   void dispose() {
 
     super.dispose();
@@ -82,6 +75,8 @@ class _HomePageState extends State<HomePage> {
       print(e);
     }
   }
+
+  
   @override
   Widget build(BuildContext context) {
    
@@ -93,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           stream:  Firestore.instance.collection('AllSalon')
                                      .document(widget.data['City'])
                                      .collection('Branch')
-                                     .document(widget.data['Salon'])
+                                     .document(widget.salonID)
                                      .collection('Barber')
                                      .document(widget.email)
                                      .collection(widget.currentDate)
@@ -121,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('9h00-9h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 0, widget.salonID),
           );
           else 
              return   FlatButton(
@@ -137,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('9h30h-10h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 1, widget.salonID),
           );
           else 
             return   FlatButton(
@@ -153,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('10h00-10h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 2, widget.salonID),
           );
           else 
              return   FlatButton(
@@ -171,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('10h30-11h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 3, widget.salonID),
           );
 
           else
@@ -188,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('11h00-11h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 4, widget.salonID),
           );
           else
              return   FlatButton(
@@ -204,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('11h30-12h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 5, widget.salonID),
           );
 
             else
@@ -221,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('12h00-12h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 7, widget.salonID),
           );
             else
               return   FlatButton(
@@ -237,7 +232,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('12h30-13h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 7, widget.salonID),
           );
             else
               return   FlatButton(
@@ -253,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('13h00-13h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 8, widget.salonID),
           );
             else
               return   FlatButton(
@@ -269,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('13h30-14h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 9, widget.salonID),
           );
             else
               return   FlatButton(
@@ -285,7 +280,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('14h00-14h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 10, widget.salonID),
           );
             else
               return   FlatButton(
@@ -301,7 +296,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('14h30-15h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 11, widget.salonID),
           );
             else
               return   FlatButton(
@@ -317,7 +312,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('15h00-15h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 12, widget.salonID),
           );
             else
               return   FlatButton(
@@ -333,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('15h30-16h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 13, widget.salonID),
           );
             else
               return   FlatButton(
@@ -349,7 +344,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('16h00-16h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 14, widget.salonID),
           );
             else
               return   FlatButton(
@@ -365,7 +360,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('16h30-17h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 15, widget.salonID),
           );
             else
               return   FlatButton(
@@ -381,7 +376,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('17h00-17h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 16, widget.salonID),
           );
             else
               return   FlatButton(
@@ -397,7 +392,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('17h30-18h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 17, widget.salonID),
           );
             else
               return   FlatButton(
@@ -413,7 +408,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('18h-18h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 18, widget.salonID),
           );
             else
               return   FlatButton(
@@ -429,7 +424,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('18h30-19h booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.black, 
-                      onPressed: () => {},
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 19, widget.salonID),
           );
             else
               return   FlatButton(
