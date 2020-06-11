@@ -61,23 +61,24 @@ showCustomerData(BuildContext context, String city, String email, String date, i
                               content: new ListView(
                                 children: <Widget>[
                                   ListTile(
-                                  title:  Text("Customer's name: " + customerData['customerName'].toString()),
+                                  title:  Text("Customer's name: \n" + customerData['customerName'].toString()),
                                     onTap: () =>{},
                                   ),
                                   ListTile(
-                                  title:  Text("Customer's number: " + customerData['customerPhone'].toString()),
+                                  title:  Text("Customer's number:  "+'\n' + customerData['customerPhone'].toString()),
                                     onTap: () =>{},
                                   ),
                                   ListTile(
-                                  title:  Text("Time: " + customerData['time']),
-                                    onTap: () =>{},
+                                  title:  Text("Time: \n" + customerData['time']),
+                                  
+                                  onTap: () =>{},
                                   ),
 
                                 ],
 
                               ),
                               actions: <Widget>[
-                                // usually buttons at the bottom of the dialog
+                               
                                 new FlatButton(
                                   child: new Text("Close"),
                                   onPressed: () {

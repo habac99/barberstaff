@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:barberstaff/services/authentication.dart';
 import 'package:barberstaff/services/StaffServices.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -27,7 +28,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  // var now = new  DateTime.now();
+  String currentDate= DateFormat('dd_MM_yyyy').format(DateTime.now());
   var test;
  
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -75,14 +77,50 @@ class _HomePageState extends State<HomePage> {
       print(e);
     }
   }
-
+  setDate( DateTime date){
+    setState(() {
+      this.currentDate = DateFormat('dd_MM_yyyy').format(date);
+      
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
    
-    return new Scaffold(
+    return new MaterialApp(
+      home: Scaffold(
 
-      appBar: AppBar(title: Text("Staff")),
+      appBar: AppBar(
+        title: Text(this.currentDate),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.calendar_today,
+              color: Colors.white,
+            ),
+            onPressed: () => {
+              DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime.now(),
+                              maxTime: DateTime.now().add(new Duration(days: 7)), 
+                              onChanged: (date) {
+                                print('change $date');
+                             },
+                              onConfirm: (date) {
+                                setDate(date);
+                             },
+                         currentTime: DateTime.now())
+            },
+          ),
+           IconButton(
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.white,
+            ),
+            onPressed: () => {},
+          )
+          ]
+      ),
       body:  
         StreamBuilder<QuerySnapshot>(
           stream:  Firestore.instance.collection('AllSalon')
@@ -91,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                                      .document(widget.salonID)
                                      .collection('Barber')
                                      .document(widget.email)
-                                     .collection(widget.currentDate)
+                                     .collection(this.currentDate)
                                      .snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             final numofbooking = snapshot.data.documents.length;
@@ -104,7 +142,7 @@ class _HomePageState extends State<HomePage> {
         // height: 81,
         
         child: GridView.builder(
-          itemCount: 20,
+          itemCount: 21,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0,childAspectRatio:1.0),
           // ignore: missing_return
           itemBuilder: (BuildContext context, int index){
@@ -364,7 +402,7 @@ class _HomePageState extends State<HomePage> {
           );
             else
               return   FlatButton(
-                      child: Text('16h30-17h00available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h30-17h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
                       onPressed: () => {},
@@ -434,20 +472,28 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () => {},
           );
           break;
+          //  case 20:
+           
+          //     return   FlatButton(
+          //             child: Text('test',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+          //                     ),
+          //             color: Colors.blueAccent, 
+          //             onPressed: () =>  setDate()
+                       
+          //             ,
+          // );
+          // break;
           
           }
      
         }
   
         )
+        
       );
       }
-        ),
-          
-      
-      
-          
-                drawer: new Drawer(
+),
+            drawer: new Drawer(
                   child: ListView(
                     children: <Widget>[
                       DrawerHeader(
@@ -473,11 +519,7 @@ class _HomePageState extends State<HomePage> {
                         title:  Text(widget.data['salonName']),
                         onTap: () => {},
                       ),
-                      // ListTile(
-                      //   title:  Text(test.toString()),
-                      //   onTap: () => {},
-                      // ),
-                       ListTile(
+                      ListTile(
                         title: Text('Logout'),
                         onTap: signOut
                       )
@@ -489,6 +531,7 @@ class _HomePageState extends State<HomePage> {
       
       
               )
+    )
               ;
          }
       
