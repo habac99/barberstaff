@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
               DatePicker.showDatePicker(context,
                               showTitleActions: true,
                               minTime: DateTime.now(),
-                              maxTime: DateTime.now().add(new Duration(days: 7)), 
+                              maxTime: DateTime.now().add(new Duration(days: 2)), 
                               onChanged: (date) {
                                 print('change $date');
                              },
@@ -142,8 +142,8 @@ class _HomePageState extends State<HomePage> {
         // height: 81,
         
         child: GridView.builder(
-          itemCount: 21,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0,childAspectRatio:1.0),
+          itemCount: 20,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0,childAspectRatio:2.0),
           // ignore: missing_return
           itemBuilder: (BuildContext context, int index){
            
@@ -151,48 +151,54 @@ class _HomePageState extends State<HomePage> {
             case 0:
             if(schedule.contains('0'))
              return   FlatButton(
-                      child: Text('9h00-9h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h00-9h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                      color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 0, widget.salonID),
           );
           else 
              return   FlatButton(
-                      child: Text('9h00-9h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h00-9h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 1:
           if(schedule.contains('1'))
              return   FlatButton(
-                      child: Text('9h30h-10h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h30h-10h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                      color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), 
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 1, widget.salonID),
           );
           else 
             return   FlatButton(
-                      child: Text('9h30h-10h00 avaiable',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h30h-10h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;          
           case 2:
           if(schedule.contains('2'))
              return   FlatButton(
-                      child: Text('10h00-10h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('10h00-10h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                      color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 2, widget.salonID),
           );
           else 
              return   FlatButton(
-                      child: Text('10h00-10h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('10h00-10h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
@@ -201,274 +207,309 @@ class _HomePageState extends State<HomePage> {
           case 3:
           if(schedule.contains('3'))
              return   FlatButton(
-                      child: Text('10h30-11h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('10h30-11h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                      color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), 
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 3, widget.salonID),
           );
 
           else
              return   FlatButton(
-                      child: Text('10h30-11h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('10h30-11h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 4:
           if(schedule.contains('4'))
               return   FlatButton(
-                      child: Text('11h00-11h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('11h00-11h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                      color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 4, widget.salonID),
           );
           else
              return   FlatButton(
-                      child: Text('11h00-11h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('11h00-11h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 5:
             if(schedule.contains('5'))
               return   FlatButton(
-                      child: Text('11h30-12h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('11h30-12h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                      color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), 
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 5, widget.salonID),
           );
 
             else
               return   FlatButton(
-                      child: Text('11h30-12h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('11h30-12h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: Colors.blueAccent,
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), 
                       onPressed: () => {},
           );
           break;
           case 6:
             if(schedule.contains('6'))
               return   FlatButton(
-                      child: Text('12h00-12h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('12h00-12h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 7, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('12h00-12h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('12h00-12h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 7:
             if(schedule.contains('7'))
               return   FlatButton(
-                      child: Text('12h30-13h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('12h30-13h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 7, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('12h30-13h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('12h30-13h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 8:
             if(schedule.contains('8'))
               return   FlatButton(
-                      child: Text('13h00-13h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('13h00-13h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 8, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('13h00-13h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('13h00-13h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 9:
             if(schedule.contains('9'))
               return   FlatButton(
-                      child: Text('13h30-14h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('13h30-14h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 9, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('13h30-14h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('13h30-14h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 10:
             if(schedule.contains('10'))
               return   FlatButton(
-                      child: Text('14h00-14h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('14h00-14h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 10, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('14h00-14h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('14h00-14h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 11:
             if(schedule.contains('11'))
               return   FlatButton(
-                      child: Text('14h30-15h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('14h30-15h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 11, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('14h30-15h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('14h30-15h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 12:
             if(schedule.contains('12'))
               return   FlatButton(
-                      child: Text('15h00-15h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('15h00-15h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 12, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('15h00-15h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('15h00-15h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 13:
             if(schedule.contains('13'))
               return   FlatButton(
-                      child: Text('15h30-16h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('15h30-16h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 13, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('15h30-16h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('15h30-16h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 14:
             if(schedule.contains('14'))
               return   FlatButton(
-                      child: Text('16h00-16h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h00-16h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 14, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('16h00-16h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h00-16h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 15:
             if(schedule.contains('15'))
               return   FlatButton(
-                      child: Text('16h30-17h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h30-17h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 15, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('16h30-17h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h30-17h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 16:
             if(schedule.contains('16'))
               return   FlatButton(
-                      child: Text('17h00-17h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('17h00-17h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 16, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('17h00-17h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('17h00-17h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
          case 17:
             if(schedule.contains('17'))
               return   FlatButton(
-                      child: Text('17h30-18h00 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('17h30-18h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 17, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('17h30-18h00 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('17h30-18h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 18:
             if(schedule.contains('18'))
               return   FlatButton(
-                      child: Text('18h-18h30 booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h-18h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 18, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('18h-18h30 available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h-18h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;
           case 19:
             if(schedule.contains('19'))
               return   FlatButton(
-                      child: Text('18h30-19h booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h30-19h Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.black, 
+                       color: Colors.grey, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 19, widget.salonID),
           );
             else
               return   FlatButton(
-                      child: Text('18h30-19h available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h30-19h Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: Colors.blueAccent, 
+                      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
           break;

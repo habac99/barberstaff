@@ -53,43 +53,46 @@ showCustomerData(BuildContext context, String city, String email, String date, i
                         .getDocuments()
                         .then((QuerySnapshot data){
                           var customerData = data.documents[0].data;
-                          showDialog(
-                          context: context,
-                          builder: (BuildContext context){
-                             return AlertDialog(
-                              title: new Text("Customer infor"),
-                              content: new ListView(
-                                children: <Widget>[
-                                  ListTile(
-                                  title:  Text("Customer's name: \n" + customerData['customerName'].toString()),
-                                    onTap: () =>{},
+                          
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(20.0)),
+                                child: Container(
+                                  height: 200,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Booking infomation: \n",  style: new TextStyle(  fontSize: 18,
+                                                                                         fontWeight: FontWeight.bold,)),
+                                        Text("Customer's name: " + customerData['customerName'].toString() + "\n"),
+                                        Text("Customer's number:  " + customerData['customerPhone'].toString()+'\n'),
+                                        Text("Time: " + customerData['time']),
+                                        SizedBox(
+                                          width: 320.0,
+                                          child: RaisedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text(
+                                              "Close",
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                            color: const Color(0xFF1BC0C5),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  ListTile(
-                                  title:  Text("Customer's number:  "+'\n' + customerData['customerPhone'].toString()),
-                                    onTap: () =>{},
-                                  ),
-                                  ListTile(
-                                  title:  Text("Time: \n" + customerData['time']),
-                                  
-                                  onTap: () =>{},
-                                  ),
-
-                                ],
-
-                              ),
-                              actions: <Widget>[
-                               
-                                new FlatButton(
-                                  child: new Text("Close"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
                                 ),
-                              ],
-                            );
-
-                          }
-                          );
+                              );
+                            });
 
 
                         });
