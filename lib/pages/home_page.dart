@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
   final String email;
   final  data;
   final String currentDate;
+  
   final String salonID;
   
   // final String userId;
@@ -30,6 +31,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // var now = new  DateTime.now();
   String currentDate= DateFormat('dd_MM_yyyy').format(DateTime.now());
+  DateTime displaydate = DateTime.now() ;
   var test;
  
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -37,30 +39,7 @@ class _HomePageState extends State<HomePage> {
   @override
  void initState() {
    
-  //  StaffData().getStaffInfor(widget.email)
-  //             .then((QuerySnapshot docs){
-  //               // print(_email);
-  //               // if(docs.documents.isEmpty) print("empty");
-  //               // else print('not empty');
-  //               // data = docs.documents[0].data;
-    
  
-  //  });
-  print(widget.currentDate);
-  //  StaffData().getShedule(widget.email, widget.data['City'], widget.data['Salon'])
-  //             .then((QuerySnapshot docs){
-  //               var data;
-  //               print(widget.data['City']);
-  //               if(docs.documents.isEmpty) print('empty');
-  //               else {
-  //                for(int i = 0; i < docs.documents.length; i++){
-  //                  data = docs.documents[i].documentID;
-  //                  _Shedule.add(data.toString());
-  //                }
-               
-  //               }
-
-  //  });
    super.initState();
 }
 @override
@@ -80,6 +59,8 @@ class _HomePageState extends State<HomePage> {
   setDate( DateTime date){
     setState(() {
       this.currentDate = DateFormat('dd_MM_yyyy').format(date);
+      this.displaydate = date;
+       
       
     });
   }
@@ -91,7 +72,7 @@ class _HomePageState extends State<HomePage> {
       home: Scaffold(
 
       appBar: AppBar(
-        title: Text(this.currentDate),
+        title: Text(DateFormat('dd/MM/yyyy').format(this.displaydate)),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -108,6 +89,7 @@ class _HomePageState extends State<HomePage> {
                              },
                               onConfirm: (date) {
                                 setDate(date);
+                                
                              },
                          currentTime: DateTime.now())
             },
@@ -146,385 +128,522 @@ class _HomePageState extends State<HomePage> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0,childAspectRatio:2.0),
           // ignore: missing_return
           itemBuilder: (BuildContext context, int index){
+           String status;
            
             switch (index){
             case 0:
-            if(schedule.contains('0'))
+            bool istimeout = StaffServices().IsTimeout(9, 30, this.displaydate);
+
+            if(schedule.contains('0')){
+            if(istimeout) status = "Complete";
+            else status = "Booked";
              return   FlatButton(
-                      child: Text('9h00-9h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h00-9h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.grey, 
+                      color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 0, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 0, widget.salonID),
           );
-          else 
+          }
+          else {
+             if(istimeout) status = "Time out";
+              else status = "Avaiable";
              return   FlatButton(
-                      child: Text('9h00-9h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h00-9h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      
+                      color: istimeout? Colors.grey:Colors.blueAccent, 
+                      
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;
           case 1:
-          if(schedule.contains('1'))
+          bool istimeout = StaffServices().IsTimeout(10, 0,this.displaydate);
+          if(schedule.contains('1')){
+            if(istimeout) status = "Completed";
+            else status = "Booked";
              return   FlatButton(
-                      child: Text('9h30h-10h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h30h-10h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.grey, 
+                      color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), 
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 1, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 1, widget.salonID),
           );
-          else 
+          }
+          else {
+             if(istimeout) status = "Time out";
+              else status = "Avaiable";
             return   FlatButton(
-                      child: Text('9h30h-10h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h30h-10h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;          
           case 2:
-          if(schedule.contains('2'))
+          bool istimeout = StaffServices().IsTimeout(10, 30,this.displaydate);
+          if(schedule.contains('2')){
+            if(istimeout) status = "Completed";
+            else status = "Booked";
              return   FlatButton(
-                      child: Text('10h00-10h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('10h00-10h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.grey, 
+                      color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 2, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 2, widget.salonID),
           );
-          else 
+          }
+          else{
+             if(istimeout) status = "Time out";
+              else status = "Avaiable";
              return   FlatButton(
-                      child: Text('10h00-10h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('10h00-10h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+
+          }
+            
           break;
 
 
           case 3:
-          if(schedule.contains('3'))
+          bool istimeout = StaffServices().IsTimeout(11, 0,this.displaydate);
+          if(schedule.contains('3')){
+            if(istimeout) status = "Completed";
+            else status = "Booked";
              return   FlatButton(
-                      child: Text('10h30-11h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('10h30-11h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.grey, 
+                      color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), 
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 3, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 3, widget.salonID),
           );
+          }
 
-          else
+          else{
+             if(istimeout) status = "Time out";
+              else status = "Avaiable";
              return   FlatButton(
-                      child: Text('10h30-11h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('10h00-10h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+             
+          }
           break;
           case 4:
-          if(schedule.contains('4'))
+          bool istimeout = StaffServices().IsTimeout(11, 30,this.displaydate);
+          if(schedule.contains('4')){
+            if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('11h00-11h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('11h00-11h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.grey, 
+                      color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 4, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 4, widget.salonID),
           );
-          else
+          }
+          else{
+              if(istimeout) status = "Time out";
+              else status = "Avaiable";
              return   FlatButton(
-                      child: Text('11h00-11h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('11h00-11h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;
           case 5:
-            if(schedule.contains('5'))
+          bool istimeout = StaffServices().IsTimeout(12, 00,this.displaydate);
+            if(schedule.contains('5')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('11h30-12h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('11h30-12h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.grey, 
+                      color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), 
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 5, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 5, widget.salonID),
           );
+            }
 
-            else
+            else{
+
+             if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('11h30-12h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('11h30-12h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent,
+                      color: istimeout? Colors.grey:Colors.blueAccent, 
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), 
                       onPressed: () => {},
           );
+          }
           break;
           case 6:
-            if(schedule.contains('6'))
+          bool istimeout = StaffServices().IsTimeout(12, 30,this.displaydate);
+            if(schedule.contains('6')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('12h00-12h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('12h00-12h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 7, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 7, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('12h00-12h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('12h00-12h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+            }
           break;
           case 7:
-            if(schedule.contains('7'))
+          bool istimeout = StaffServices().IsTimeout(13, 00,this.displaydate);
+            if(schedule.contains('7')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('12h30-13h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('12h30-13h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 7, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 7, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('12h30-13h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('12h30-13h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;
           case 8:
-            if(schedule.contains('8'))
+           bool istimeout = StaffServices().IsTimeout(13, 30,this.displaydate);
+            if(schedule.contains('8')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('13h00-13h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('13h00-13h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 8, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 8, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('13h00-13h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('13h00-13h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+            }
           break;
           case 9:
-            if(schedule.contains('9'))
+           bool istimeout = StaffServices().IsTimeout(14, 00,this.displaydate);
+            if(schedule.contains('9')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('13h30-14h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('13h30-14h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900], 
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 9, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 9, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('13h30-14h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('13h30-14h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+            }
           break;
           case 10:
-            if(schedule.contains('10'))
+           bool istimeout = StaffServices().IsTimeout(14, 30,this.displaydate);
+            if(schedule.contains('10')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('14h00-14h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('14h00-14h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 10, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 10, widget.salonID),
           );
-            else
+          }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('14h00-14h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('14h00-14h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+            }
           break;
           case 11:
-            if(schedule.contains('11'))
+           bool istimeout = StaffServices().IsTimeout(15, 00,this.displaydate);
+            if(schedule.contains('11')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('14h30-15h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('14h30-15h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                 
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 11, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 11, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('14h30-15h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('14h30-15h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;
           case 12:
-            if(schedule.contains('12'))
+          bool istimeout = StaffServices().IsTimeout(15, 30,this.displaydate);
+            if(schedule.contains('12')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('15h00-15h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('15h00-15h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 12, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 12, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('15h00-15h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('15h00-15h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;
           case 13:
-            if(schedule.contains('13'))
+           bool istimeout = StaffServices().IsTimeout(16, 0,this.displaydate);
+            if(schedule.contains('13')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('15h30-16h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('15h30-16h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 13, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 13, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('15h30-16h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('15h30-16h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+            }
           break;
           case 14:
-            if(schedule.contains('14'))
+           bool istimeout = StaffServices().IsTimeout(16, 30,this.displaydate);
+            if(schedule.contains('14')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('16h00-16h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h00-16h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 14, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 14, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('16h00-16h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h00-16h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+            }
           break;
           case 15:
-            if(schedule.contains('15'))
+           bool istimeout = StaffServices().IsTimeout(17, 0,this.displaydate);
+            if(schedule.contains('15')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('16h30-17h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h30-17h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 15, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 15, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('16h30-17h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('16h30-17h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+            }
           break;
           case 16:
-            if(schedule.contains('16'))
+           bool istimeout = StaffServices().IsTimeout(17, 30,this.displaydate);
+            if(schedule.contains('16')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('17h00-17h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('17h00-17h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 16, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 16, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('17h00-17h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('17h00-17h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+            }
           break;
          case 17:
-            if(schedule.contains('17'))
+          bool istimeout = StaffServices().IsTimeout(18, 0,this.displaydate);
+            if(schedule.contains('17')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('17h30-18h00 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('17h30-18h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 17, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 17, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('17h30-18h00 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('17h30-18h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;
           case 18:
-            if(schedule.contains('18'))
+           bool istimeout = StaffServices().IsTimeout(18, 30,this.displaydate);
+            if(schedule.contains('18')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('18h-18h30 Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h-18h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 18, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 18, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('18h-18h30 Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h-18h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;
           case 19:
-            if(schedule.contains('19'))
+           bool istimeout = StaffServices().IsTimeout(19, 0,this.displaydate);
+            if(schedule.contains('19')){
+              if(istimeout) status = "Completed";
+            else status = "Booked";
               return   FlatButton(
-                      child: Text('18h30-19h Booked',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h30-19h $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                       color: Colors.grey, 
+                       color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, widget.currentDate, 19, widget.salonID),
+                      onPressed: () => StaffServices().showCustomerData(context,widget.data['City'],widget.email, this.currentDate, 19, widget.salonID),
           );
-            else
+            }
+            else{
+               if(istimeout) status = "Time out";
+              else status = "Avaiable";
               return   FlatButton(
-                      child: Text('18h30-19h Available',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h30-19h $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
-                      color: Colors.blueAccent, 
+                      color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                       onPressed: () => {},
           );
+          }
           break;
-          //  case 20:
-           
-          //     return   FlatButton(
-          //             child: Text('test',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
-          //                     ),
-          //             color: Colors.blueAccent, 
-          //             onPressed: () =>  setDate()
-                       
-          //             ,
-          // );
-          // break;
-          
+                  
           }
      
         }

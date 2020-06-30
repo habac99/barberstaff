@@ -96,26 +96,38 @@ showCustomerData(BuildContext context, String city, String email, String date, i
 
 
                         });
-                                     
-        
-      
-      //  return AlertDialog(
-      //     title: new Text("Customer infor"),
-      //     content: new Text("Alert Dialog body"),
-      //     actions: <Widget>[
-      //       // usually buttons at the bottom of the dialog
-      //       new FlatButton(
-      //         child: new Text("Close"),
-      //         onPressed: () {
-      //           Navigator.of(context).pop();
-      //         },
-      //       ),
-      //     ],
-      //   );
+ 
+ }
+ bool IsTimeout(int hour, int minute, DateTime date){
+  
+   
+   DateTime now = DateTime.now();
+   int currentHour = now.hour.toInt();
+   int currentMinute = now.minute.toInt();
+   if(date.year < now.year) return true;
+   else if (date.year == now.year){
+          if(date.month < now.month) return true;
+          else if(date.month==now.month){
+            if(date.day < now.day) return true;
+            else if(date.day == now.day){
+              if(hour < currentHour)
+                 return true;
+              else if(hour == currentHour){
+                if(minute > currentMinute)
+                    return false;
+              else return true;
+              }
+                else return false;
+           }
+          else return false;
+              
+            
+          }
+          else return false;
 
-       
+   }
+   else return false;
+   
 
-    //  }
-    //  );
  }
 }
