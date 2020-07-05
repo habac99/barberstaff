@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:barberstaff/services/authentication.dart';
@@ -82,7 +85,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => {
               DatePicker.showDatePicker(context,
                               showTitleActions: true,
-                              minTime: DateTime.now(),
+                              minTime: DateTime.now().subtract(new Duration(days: 2)),
                               maxTime: DateTime.now().add(new Duration(days: 2)), 
                               onChanged: (date) {
                                 print('change $date');
@@ -104,6 +107,7 @@ class _HomePageState extends State<HomePage> {
           ]
       ),
       body:  
+        
         StreamBuilder<QuerySnapshot>(
           stream:  Firestore.instance.collection('AllSalon')
                                      .document(widget.data['City'])
@@ -121,7 +125,15 @@ class _HomePageState extends State<HomePage> {
             }
             return 
                 Container(
-        // height: 81,
+                  // decoration: new BoxDecoration(
+                  //   shape: BoxShape.rectangle,
+                  //   image: new DecorationImage(
+                  //     image: ExactAssetImage('assets/images/img.jpg'),
+                  //     fit: BoxFit.co,
+                      
+                      
+                  //     ),
+                  // ),
         
         child: GridView.builder(
           itemCount: 20,
@@ -147,9 +159,9 @@ class _HomePageState extends State<HomePage> {
           }
           else {
              if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
              return   FlatButton(
-                      child: Text('9h00-9h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('9h00-9h30  $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       
                       color: istimeout? Colors.grey:Colors.blueAccent, 
@@ -174,7 +186,7 @@ class _HomePageState extends State<HomePage> {
           }
           else {
              if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
             return   FlatButton(
                       child: Text('9h30h-10h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -199,7 +211,7 @@ class _HomePageState extends State<HomePage> {
           }
           else{
              if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
              return   FlatButton(
                       child: Text('10h00-10h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -229,7 +241,7 @@ class _HomePageState extends State<HomePage> {
 
           else{
              if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
              return   FlatButton(
                       child: Text('10h00-10h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -255,7 +267,7 @@ class _HomePageState extends State<HomePage> {
           }
           else{
               if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
              return   FlatButton(
                       child: Text('11h00-11h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -282,7 +294,7 @@ class _HomePageState extends State<HomePage> {
             else{
 
              if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('11h30-12h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -307,7 +319,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('12h00-12h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -332,7 +344,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('12h30-13h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -357,7 +369,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('13h00-13h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -382,7 +394,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('13h30-14h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -407,7 +419,7 @@ class _HomePageState extends State<HomePage> {
           }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('14h00-14h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -433,7 +445,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('14h30-15h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -458,7 +470,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('15h00-15h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -483,7 +495,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('15h30-16h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -508,7 +520,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('16h00-16h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -533,7 +545,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('16h30-17h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -558,7 +570,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('17h00-17h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -583,7 +595,7 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
                       child: Text('17h30-18h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
@@ -599,7 +611,7 @@ class _HomePageState extends State<HomePage> {
               if(istimeout) status = "Completed";
             else status = "Booked";
               return   FlatButton(
-                      child: Text('18h-18h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h00-18h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                        color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
@@ -608,9 +620,9 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
-                      child: Text('18h-18h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h00-18h30 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
@@ -624,7 +636,7 @@ class _HomePageState extends State<HomePage> {
               if(istimeout) status = "Completed";
             else status = "Booked";
               return   FlatButton(
-                      child: Text('18h30-19h $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h30-19h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                        color:istimeout? Colors.green[900]:Colors.deepPurple[900],
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
@@ -633,9 +645,9 @@ class _HomePageState extends State<HomePage> {
             }
             else{
                if(istimeout) status = "Time out";
-              else status = "Avaiable";
+              else status = "Available";
               return   FlatButton(
-                      child: Text('18h30-19h $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
+                      child: Text('18h30-19h00 $status',textAlign: TextAlign.center, style: new TextStyle(  color: Colors.white) 
                               ),
                       color: istimeout? Colors.grey:Colors.blueAccent,  
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
